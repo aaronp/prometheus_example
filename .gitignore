@@ -1,0 +1,10 @@
+.metals
+.scala
+.bsp
+.vscode
+project
+target
+.idea
+# jmx_prometheus_javaagent-0.16.1.jar
+app.jar
+prometheus_data
