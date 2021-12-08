@@ -8,3 +8,4 @@ target
 # jmx_prometheus_javaagent-0.16.1.jar
 app.jar
 prometheus_data
+jmx_prometheus_javaagent-0.16.1.jar
