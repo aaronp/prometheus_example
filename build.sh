@@ -9,6 +9,13 @@ function ensureAgent() {
   [[ -f jmx_prometheus_javaagent-0.16.1.jar ]] || downloadAgent
 }
 
+function clean() {
+  rm *.jar
+  rm -rf prometheus_data
+  rm -rf target
+  rm -rf grafana
+}
+
 function fatJar() {
   [[ -f app.jar ]] || scala-cli package App.scala -o app.jar --assembly
 }

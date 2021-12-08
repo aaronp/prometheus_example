@@ -1,5 +1,28 @@
-# Prometheus example
+# Prometheus/Grafana Example
 
+This project was created to demonstrate:
+ * Using dropwizard counters, meters and histograms
+ * Exposing those metric MBeans via an HTTP endpoint using jmx_prometheus and config.yaml
+ * Putting it all together with Prometheus and Grafana in a docker-compose
+
+The end result of running `docker-compose up` will be that:
+
+#### You can easily create/update counters, meters and histograms via GET requests in your browser
+
+ * [localhost:8080/inc/foo](http://localhost:8080/inc/foo) will increment the 'foo' counter (for any string 'foo')
+ * [localhost:8080/dec/foo](http://localhost:8080/dec/bar) will decrement the 'bar' counter (for any string 'bar')
+ * [localhost:8080/meter/fizz](http://localhost:8080/meter/fizz) will mark the 'fizz' meter (for any string 'fizz')
+ * [localhost:8080/histogram/buzz/123](http://localhost:8080/histogram/buzz/123) will set the value 123 of the 'buzz' histogram (for any string 'buzz')
+ * [localhost:8080](http://localhost:8080) will show some basic usage text
+
+#### You see the JMX metrix
+Either use `jconsole` to browse the app_lication MBeans.
+The names of which are matched in the `config.yaml` in order to expose nice key/value pairs.
+
+Browse to [localhost:8090/metres](http://localhost:8090/metres) to see the exposed key/value pairs
+
+
+# Browser Usage
 
 # Development
 Use [scala-cli](https://scala-cli.virtuslab.org/docs) for all the things (TM)

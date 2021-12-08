@@ -1,6 +1,6 @@
 FROM virtuslab/scala-cli:latest AS build
 RUN mkdir /app
-COPY ["jmx_prometheus_javaagent-0.16.1.jar", "App.scala", "build.sh", "run.sh", "config.yaml", "/app/"]
+COPY ["App.scala", "build.sh", "run.sh", "config.yaml", "/app/"]
 WORKDIR /app
 RUN source ./build.sh && fatJar
 
@@ -10,6 +10,7 @@ FROM openjdk:8u312-jre-slim
 RUN mkdir /app
 #RUN addgroup --system javauser && adduser -S -s /bin/false -G javauser javauser
 COPY --from=build /app/* /app
+# "jmx_prometheus_javaagent-0.16.1.jar",
 WORKDIR /app
 #RUN chown -R javauser:javauser /app
 #USER javauser
