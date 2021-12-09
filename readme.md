@@ -1,5 +1,20 @@
 # Prometheus/Grafana Example
 
+## Usage:
+
+Run
+```
+docker-compose up --remove-orphans --build --force-recreate 
+```
+
+And browse to
+* [localhost:8080](http://localhost:8080) will show some basic usage text on how to mess w/ metrics
+* [localhost:8090](http://localhost:8090) to see the metrics which will be scraped
+* [localhost:9090/graph](http://localhost:9090/graph) to mess with [prometheus](https://prometheus.io/)
+* [localhost:3000](http://localhost:3000) to create some [grafana](https://grafana.com/) dashboards
+
+See [App.scala](App.scala) for the REST code which uses [dropwizard](https://www.dropwizard.io/en/latest/) to drive the metrics
+
 ## What is this project? 
 This project was created to demonstrate:
  * Using dropwizard counters, meters and histograms
@@ -67,7 +82,7 @@ Otherwise you won't be able to browse to [http://localhost:8080](http://localhos
 # Development
 
 You should just need docker to:
-```dtd
+```
 docker-compose up --remove-orphans --build --force-recreate 
 ```
 
@@ -82,7 +97,7 @@ scala-cli App.scala
 ```
 
 or, using the convenience build.sh:
-```dtd
+```
 source build.sh && run
 ```
 
@@ -92,37 +107,4 @@ And use GET verbs (naughty) in your browser to e.g.
  * decrement 'bar' (just any name will do):  [http://localhost:8080/dec/bar](http://localhost:8080/dec/bar)
  * set value 123 on histogram 'whatevs':  [http://localhost:8080/histogram/whatevs/123](http://localhost:8080/histogram/whatevs/123)
  * set mark on meter 'dave':  [http://localhost:8080/meter/dave](http://localhost:8080/meter/dave)
-
-## Testing
-You can check the metrics by opening MBeans in `jconsole` 
-
-## Building
-
- 1) Create a fat jar 'app.jar':
-```
-scala-cli package App.scala -o app.jar --assembly
-```
- 2) get prometheus
-
-# exposes e.g. metrics_app_lication_example_50thPercentile{type="histograms",} 212.0
-browse to http://localhost:8090/metrics
-
-# Prometheus
-
-## A Note on config.yaml and Regex Patterns
-
-The 'pattern'
-
-```
-docker run -v $(pwd)/prometheus/:/etc/prometheus/ \
-  --net host \
-  -v $(pwd)/prometheus_data:/prometheus prom/prometheus:v2.1.0 \
-  --config.file=/etc/prometheus/prometheus.yml \
-  --storage.tsdb.path=/prometheus \
-  --web.console.libraries=/usr/share/prometheus/console_libraries \
-  --web.console.templates=/usr/share/prometheus/consoles
-  
-```
-# Notes
-
-See https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/vegasbrianc/prometheus/master/pwd-stack.yml
+ 
