@@ -1,17 +1,17 @@
 ---
+# config.yaml used to configure the jmx_prometheus agent.
+#
+# e.g. java -javaagent:./jmx_prometheus_javaagent-0.16.1.jar=8090:config.yaml ....
+#                                                                 ^^^^^^^^^^^
+#
+# The 'app.lication' stuff comes from the 'def name(...)' in App.scala where we name our metrics
+#
 startDelaySeconds: 0
-# hostPort: localhost:7779
-#username:
-#password:
-#jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:8091/jmxrmi
 ssl: false
 #lowercaseOutputName: false
 #lowercaseOutputLabelNames: false
 # whitelistObjectNames: ["org.apache.cassandra.metrics:*"]
 # blacklistObjectNames: ["org.apache.cassandra.metrics:type=ColumnFamily,*"]
-# metrics:name=app.lication.benjamin,type=counters
-# metrics:name=app.lication.asdf,type=histograms
-# metrics:name=app.lication.benny,type=meters
 rules:
   - pattern: "app.lication.(.*), type=counters><>Count: (.*)"
     help: "$1 is $2"

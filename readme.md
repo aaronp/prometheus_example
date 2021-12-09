@@ -1,5 +1,6 @@
 # Prometheus/Grafana Example
 
+## What is this project? 
 This project was created to demonstrate:
  * Using dropwizard counters, meters and histograms
  * Exposing those metric MBeans via an HTTP endpoint using jmx_prometheus and config.yaml
@@ -21,6 +22,47 @@ The names of which are matched in the `config.yaml` in order to expose nice key/
 
 Browse to [localhost:8090/metres](http://localhost:8090/metres) to see the exposed key/value pairs
 
+# Why was it created?
+
+There can be a lot of moving parts in application telemetry, and on most projects that all gets a bit muddled together/confusing.
+
+This project allowed me to build up/play with each element independently and understand the what/why/how of each:
+
+ * metrics gathering (counters, meters, gauges) (this project uses [dropwizard](https://www.dropwizard.io/en/latest/))
+ * Those metrics typically get exposed on the JVM using [MBeans](https://docs.oracle.com/javase/tutorial/jmx/mbeans/index.html) which you can see using [jconsole](https://openjdk.java.net/tools/svc/jconsole/).
+   That's not ideal - typically external applications such as [new relic](https://newrelic.com/) or [prometheus](https://prometheus.io/) (this example uses prometheus) can more easily just scrape an HTTP endpoint.
+ * To expose MBeans as an http endpoint, you use an agent such as [prometheus jmx_exporter](https://github.com/prometheus/jmx_exporter) (which entails using its config.yaml)
+
+Phew! That's all just to set up our app. It's great to then be able to spin up a local [prometheus](https://prometheus.io) and [grafana](https://grafana.com/) to play with.
+
+This project is meant to just be an example of all of those pieces working together.
+
+## What's Cool
+
+I love [scala](https://scala-cli.virtuslab.org/) - it remains the most scalable, flexible, powerful language I've found, and it has some amazing tooling.
+Once you learn it, you find other languages lacking in one way or another.
+
+Scala can be daunting/complicated, but it can also be amazingly simple. 
+
+In this case, I used Lihaoyi's [cask](https://github.com/com-lihaoyi/cask) library and VirtusLab's [scala-cli](https://scala-cli.virtuslab.org/) to package a 
+very simple REST [App](App.scala).
+
+Put them both together, and you have a single scala file in less than 100 lines of code which, incidentally, is also buildable by declaring its own dependencies at the top:
+```
+// using scala 3.1.0
+// using lib com.lihaoyi::cask:0.8.0
+// using lib io.dropwizard.metrics:metrics-core:4.1.2
+// using lib io.dropwizard.metrics:metrics-jmx:4.1.2
+```
+
+how super-cool is that!?!?
+
+## Gotchas/Lessons learned
+When using [cask](https://github.com/com-lihaoyi/cask), you have to:
+```
+override def host: String = "0.0.0.0"
+```
+Otherwise you won't be able to browse to [http://localhost:8080](http://localhost:8080) from inside Docker. 
 
 # Browser Usage
 
